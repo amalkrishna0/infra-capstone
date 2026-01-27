@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/*
   workflow_dispatch:
 
 jobs:
@@ -24,8 +23,16 @@ jobs:
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
-      - name: Terraform Init
-        run: terraform init -backend=false   # safer for CI, avoids backend config issues
+      - name: Terraform Init & Validate (All Projects)
+        run: |
+          for dir in project-*; do
+            echo "Checking $dir"
+            cd $dir
 
-      - name: Terraform Validate
-        run: terraform validate
+            if ls *.tf 1> /dev/null 2>&1; then
+              terraform init -backend=false
+              terraform validate
+            fi
+
+            cd ..
+          done
