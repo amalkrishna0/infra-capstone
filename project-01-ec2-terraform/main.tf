@@ -71,8 +71,8 @@ resource "aws_instance" "web" {
 
   tags = {
     Name        = "project01-web-server"
-    Enviornment = "dev" 
-    Owner = "devinfra"
+    Enviornment = "dev"
+    Owner       = "devinfra"
   }
 }
 
