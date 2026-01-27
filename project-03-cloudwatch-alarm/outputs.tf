@@ -1,3 +1,3 @@
 output "instance_id" {
-	value = aws_instance.cpu_test.id
+  value = aws_instance.cpu_test.id
 }

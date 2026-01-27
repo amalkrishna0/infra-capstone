@@ -1,5 +1,5 @@
-provider "aws"{
-	region = var.region
+provider "aws" {
+  region = var.region
 }
 
 data "aws_vpc" "default" {
@@ -7,18 +7,18 @@ data "aws_vpc" "default" {
 }
 
 resource "aws_instance" "cpu_test" {
-	ami = var.ami_id
-	instance_type = var.instance_type
+  ami           = var.ami_id
+  instance_type = var.instance_type
 
-	tags = {
-		Name = "project3-cpu-test"
-	}
+  tags = {
+    Name = "project3-cpu-test"
+  }
 }
 
 resource "aws_security_group" "cpu_test_sg" {
   name        = "cpu-test-sg"
   description = "Allow SSH and optional FTP"
-  vpc_id      = data.aws_vpc.default.id  
+  vpc_id      = data.aws_vpc.default.id
 
   ingress {
     description = "SSH access"
@@ -36,16 +36,16 @@ resource "aws_security_group" "cpu_test_sg" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_alarm" {
-	alarm_name = "high-cpu-alarm"
-	comparison_operator =  "GreaterThanThreshold"
-	evaluation_periods = 1
-	metric_name = "CPUUtilization"
-	namespace = "AWS/EC2"
-	period = 60
-	statistic = "Average"
- 	threshold = 70
-	alarm_description = "Alarm when CPU exceeds 70%"
-	dimensions = {
-		InstanceId=aws_instance.cpu_test.id
-	}
+  alarm_name          = "high-cpu-alarm"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = 60
+  statistic           = "Average"
+  threshold           = 70
+  alarm_description   = "Alarm when CPU exceeds 70%"
+  dimensions = {
+    InstanceId = aws_instance.cpu_test.id
+  }
 }
