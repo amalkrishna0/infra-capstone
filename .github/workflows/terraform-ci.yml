@@ -21,24 +21,28 @@ jobs:
         with:
           terraform_wrapper: false   # optional, avoids wrapper scripts
 
-      - name: Terraform Format & Validate (Terraform Projects Only)
+
+      - name: Terraform checks (explicit projects)
         shell: bash
         run: |
           set -e
 
-          for dir in project-*; do
-            if ls "$dir"/*.tf > /dev/null 2>&1; then
-              echo "======================================"
-              echo "Running Terraform checks in $dir"
-              echo "======================================"
+          TERRAFORM_PROJECTS=(
+            project-01-ec2-terraform
+            project-02-s3-static-site
+            project-03-cloudwatch-alarm
+            project-04-iam-user-automation
+          )
 
-              terraform fmt -check -recursive "$dir"
+          for dir in "${TERRAFORM_PROJECTS[@]}"; do
+            echo "======================================"
+            echo "Running Terraform checks in $dir"
+            echo "======================================"
 
-              cd "$dir"
-              terraform init -backend=false -input=false
-              terraform validate
-              cd ..
-            else
-              echo "Skipping $dir (not a Terraform project)"
-            fi
+            terraform fmt -check -recursive "$dir"
+
+            cd "$dir"
+            terraform init -backend=false -input=false
+            terraform validate
+            cd ..
           done
