@@ -120,25 +120,39 @@ terraform output
 
 
 
+
+
 ##  Deliverables
 
 
 
-- **Test Evidence**
-
-  - ![IAM User Console](screenshots/iam-aws-console.png)  
-
-    Screenshot showing the IAM user listed in the AWS Management Console.
-
-  - ![IAM User Created](screenshots/iam-user-created.png)  
-
-    Screenshot confirming successful IAM user creation.
 
 
 
-- **Repository Link**  
 
-  [Your Repo Link](https://github.com/your-username/project-04-iam-user-automation)
+ ### Test Evidence
+
+
+
+
+
+ - Screenshot showing the IAM user listed in the AWS Management Console.
+
+   
+
+  ![IAM User Console](screenshots/iam-aws-console.png)  
+
+  
+
+  - Screenshot confirming successful IAM user creation.
+
+
+
+  ![IAM User Created](screenshots/iam-user-created.png)  
+
+
+
+
 
 
 
@@ -157,7 +171,6 @@ This project demonstrated how Terraform can be used to automate IAM user managem
 
 
 ✔ Project completed successfully
-
 
 
 
