@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - fix/*
+      - feature/*
   workflow_dispatch:
 
 jobs:
@@ -20,19 +22,28 @@ jobs:
         with:
           terraform_wrapper: false   # optional, avoids wrapper scripts
 
-      - name: Terraform Format Check
-        run: terraform fmt -check -recursive
 
-      - name: Terraform Init & Validate (All Projects)
+      - name: Terraform checks (explicit projects)
+        shell: bash
         run: |
-          for dir in project-*; do
-            echo "Checking $dir"
-            cd $dir
+          set -e
 
-            if ls *.tf 1> /dev/null 2>&1; then
-              terraform init -backend=false
-              terraform validate
-            fi
+          TERRAFORM_PROJECTS=(
+            project-01-ec2-terraform
+            project-02-s3-static-site
+            project-03-cloudwatch-alarm
+            project-04-iam-user-automation
+          )
 
+          for dir in "${TERRAFORM_PROJECTS[@]}"; do
+            echo "======================================"
+            echo "Running Terraform checks in $dir"
+            echo "======================================"
+
+            terraform fmt -check -recursive "$dir"
+
+            cd "$dir"
+            terraform init -backend=false -input=false
+            terraform validate
             cd ..
           done
