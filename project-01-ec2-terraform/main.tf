@@ -71,6 +71,7 @@ resource "aws_instance" "web" {
 
 	tags = {
 		Name="project01-web-server"
+		Enviornment = "dev"
 	}
 }
 
