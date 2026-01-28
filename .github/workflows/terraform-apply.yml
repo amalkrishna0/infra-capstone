@@ -3,7 +3,7 @@ name : Terraform Apply(GitOps - Test)
 on:
         push:
                 branches:
-                        - feature/gitops
+                        - main
 
 jobs:
         terraform-apply:
