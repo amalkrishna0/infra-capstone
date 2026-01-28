@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+        name:  project14-service
+spec:
+        type: LoadBalancer
+        selector:
+                app: project14
+        ports:
+          - port: 80
+            targetPort: 80

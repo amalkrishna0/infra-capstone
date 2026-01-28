@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: project14-app
+spec: 
+        replicas: 2
+        selector:
+                matchLabels:
+                        app: project14
+        template:
+                metadata:
+                        labels:
+                                app: project14
+                spec:
+                        containers:
+                        - name: project14-container
+                          image: 399090453014.dkr.ecr.ap-south-1.amazonaws.com/project-13-ecr-repo:latest
+                          ports:
+                          - containerPort: 80
