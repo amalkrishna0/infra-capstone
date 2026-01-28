@@ -1,5 +1,5 @@
 name : Terraform Apply(GitOps - Test)
-
+  
 on:
         push:
                 branches:
@@ -9,7 +9,7 @@ jobs:
         terraform-apply:
                 name: Apply Infrastructure Changes
                 runs-on: ubuntu-latest
-                environment: production  
+                environment: production
 
 
                 steps:
@@ -42,3 +42,4 @@ jobs:
                                       cd ..
                                     fi
                                   done
+
