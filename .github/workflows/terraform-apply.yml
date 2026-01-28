@@ -29,17 +29,10 @@ jobs:
                                   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                                   aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-                        - name: Terraform Apply (Test Branch)
+                        - name: Terraform Apply (Project 01 only)
                           run: |
-                                  for dir in project-*; do
-                                    if [ -d "$dir" ] && ls "$dir"/*.tf >/dev/null 2>&1; then
-                                      echo "Applying Terraform in $dir"
-                                      cd "$dir"
+                            cd project-01-ec2-terraform
+                            terraform init
+                            terraform apply -auto-approve
 
-                                      terraform init
-                                      terraform apply -auto-approve
-
-                                      cd ..
-                                    fi
-                                  done
 
