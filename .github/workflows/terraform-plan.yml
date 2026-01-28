@@ -1,4 +1,4 @@
-name : Terraform APply(GitOps - Test)
+name : Terraform Apply(GitOps - Test)
 
 on:
         push:
