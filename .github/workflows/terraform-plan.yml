@@ -1,0 +1,41 @@
+name : Terraform APply(GitOps - Test)
+
+on:
+        push:
+                branches:
+                        - features/gitops
+
+jobs:
+        terraform-apply:
+                runs-on: ubuntu-latest
+
+                steps:
+                        - name: Checkout code
+                          uses: actions/checkout@v4
+
+
+                        - name: Setup Terraform
+                          uses: hashicorp/setup-terraform@v3
+
+
+                        - name: Configure AWS credentials
+                          uses: aws-actions/configure-aws-credentials@v4
+
+                          with:
+                                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                                  aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+                        - name: Terraform Apply (Test Branch)
+                          run: |
+                                  for dir in project-*; do
+                                    if [ -d "$dir" ] && ls "$dir"/*.tf >/dev/null 2>&1; then
+                                      echo "Applying Terraform in $dir"
+                                      cd "$dir"
+
+                                      terraform init
+                                      terraform apply -auto-approve
+
+                                      cd ..
+                                    fi
+                                  done
